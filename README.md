@@ -13,3 +13,6 @@
 - Node Js: For backend
 - Firebase: For database and user authentication
 
+img {
+  border-radius: 50%;
+}
