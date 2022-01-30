@@ -37,11 +37,6 @@ const HomeScreen = () => {
                     style={styles.searchInput} />
 
             </View>
-            <Icon.Button
-                name="search-outline"
-                onPress={searchObj}
-                style={styles.searchbtn}
-            ></Icon.Button>
             <FlatList
                 numColumns={2}
                 data={items}
@@ -54,7 +49,7 @@ const HomeScreen = () => {
                         >
                             <View >
                                 <Image style={styles.cardImage} source={{
-                                    uri: 'https://reactnative.dev/img/tiny_logo.png',
+                                    uri: 'https://firebasestorage.googleapis.com/v0/b/donateu.appspot.com/o/funny-meme-feb13-1024x1024.jpg?alt=media&token=b88758a4-df87-449d-bf56-511f12dd945c',
                                 }} />
                             </View>
 

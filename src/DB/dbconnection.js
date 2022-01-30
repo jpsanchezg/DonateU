@@ -28,6 +28,7 @@ if (firebase.apps.length === 0) {
 
 const auth = firebase.auth()
 const db = app.firestore();
+const storage = firebase.storage();
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
@@ -51,17 +52,17 @@ const registerWithEmailAndPassword = async (email, password, username, firstName
     }
 };
 
-const donateProductsxUser = async (photoURL, tittle, location, description) => {
+const donateProductsxUser = async (photo, title, location, category, description,uid) => {
     try {
-        const res = await auth.createUserWithEmailAndPassword(email, password);
+        const res = app.auth().currentUser;
         const user = res.user;
-        await db.collection("donations").doc(tittle).set({
-            uid: user.uid,
-            username,
-            firstName,
+        await db.collection("donations").doc(title).set({
+            uid,
             category,
-            photoURL,
-            lastname
+            photo,
+            location,
+            title,
+            description
         });
     } catch (err) {
         console.error(err);
@@ -87,8 +88,11 @@ const signOutUser = async () => {
 export {
     auth,
     db,
+    storage,
     signOutUser,
+
     signInWithGoogle,
+    donateProductsxUser,
     registerWithEmailAndPassword
 
 };

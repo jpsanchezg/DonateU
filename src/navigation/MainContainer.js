@@ -52,7 +52,7 @@ export default function MainContainer() {
             })}>
 
             <Tab.Screen options={{ headerShown: false }} name={homeName} component={HomeScreen} />
-            <Tab.Screen options={{ headerShown: false }} name={chatName} component={ChatScreen} />
+            {/*<Tab.Screen options={{ headerShown: false }} name={chatName} component={ChatScreen} />*/}
             <Tab.Screen options={{ headerShown: false }} name={uploadinfoName} component={UploadInfoScreen} />
             <Tab.Screen options={{ headerShown: false }} name={profileName} component={ProfileScreen} />
 
