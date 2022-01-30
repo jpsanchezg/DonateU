@@ -9,7 +9,7 @@
 
 ##  How we built it
 
-- React Js: For frontend
+- React native : For frontend
 - Node Js: For backend
 - Firebase: For database and user authentication
 
