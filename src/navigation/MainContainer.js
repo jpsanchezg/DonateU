@@ -51,10 +51,10 @@ export default function MainContainer() {
                 }
             })}>
 
-            <Tab.Screen name={homeName} component={HomeScreen} />
-            <Tab.Screen name={chatName} component={ChatScreen} />
-            <Tab.Screen name={uploadinfoName} component={UploadInfoScreen} />
-            <Tab.Screen name={profileName} component={ProfileScreen} />
+            <Tab.Screen options={{ headerShown: false }} name={homeName} component={HomeScreen} />
+            <Tab.Screen options={{ headerShown: false }} name={chatName} component={ChatScreen} />
+            <Tab.Screen options={{ headerShown: false }} name={uploadinfoName} component={UploadInfoScreen} />
+            <Tab.Screen options={{ headerShown: false }} name={profileName} component={ProfileScreen} />
 
         </Tab.Navigator>
 

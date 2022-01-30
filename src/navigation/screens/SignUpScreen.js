@@ -1,18 +1,22 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 import {
     auth,
-    registerWithEmailAndPassword
+    registerWithEmailAndPassword,
+    signInWithGoogle
 } from '../../DB/dbconnection'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+
 
 const SignUpScreen = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [username, setUsername] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastname, setLastName] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastname, setLastName] = useState("");
 
     const navigation = useNavigation()
 
@@ -34,6 +38,9 @@ const SignUpScreen = () => {
 
         }
     };
+    const googlesignUp = () => {
+        signInWithGoogle();
+    }
 
 
     const handleLogin = () => {
@@ -41,61 +48,107 @@ const SignUpScreen = () => {
     }
 
     return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior="padding"
+        <KeyboardAwareScrollView
+            behavior="padding" enabled
         >
-            <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder="FirstName"
-                    value={firstName}
-                    onChangeText={text => setFirstName(text)}
-                    style={styles.input}
+            <View
+                style={styles.container}
+            >
+                <Image
+                    style={styles.logoDonateu}
+                    source={require('../../assets/logo-donateU.png')}
                 />
-                <TextInput
-                    placeholder="LastName"
-                    value={lastname}
-                    onChangeText={text => setLastName(text)}
-                    style={styles.input}
-                />
-                <TextInput
-                    placeholder="Username"
-                    value={username}
-                    onChangeText={text => setUsername(text)}
-                    style={styles.input}
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        placeholder="FirstName"
+                        value={firstName}
+                        onChangeText={text => setFirstName(text)}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="LastName"
+                        value={lastname}
+                        onChangeText={text => setLastName(text)}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="Username"
+                        value={username}
+                        onChangeText={text => setUsername(text)}
+                        style={styles.input}
 
-                />
-                <TextInput
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={text => setEmail(text)}
-                    style={styles.input}
-                />
-                <TextInput
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                    style={styles.input}
-                    secureTextEntry
-                />
+                    />
+                    <TextInput
+                        placeholder="Email"
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+                        style={styles.input}
+                        secureTextEntry
+                    />
 
+                </View>
+
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        onPress={handleSignUp}
+                        style={styles.button}
+                    >
+                        <Text style={styles.buttonText}>Sign up</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Login')}
+                        style={[styles.button, styles.buttonOutline]}
+                    >
+                        <Text style={styles.buttonOutlineText}>Login</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.login_social}>
+                    <View style={styles.login_social_separator}>
+                        <View style={styles.login_social_separator_line} />
+                        <Text style={styles.login_social_separator_text}>{'or'}</Text>
+                        <View style={styles.login_social_separator_line} />
+                    </View>
+                    <View style={styles.login_social_buttons}>
+                        <TouchableOpacity>
+                            <View
+                                style={[
+                                    styles.login_social_button,
+                                    styles.login_social_facebook,
+                                ]}>
+                                <Image
+                                    style={styles.login_social_icon}
+                                    source={require('../../assets/facebook-logo.png')}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={googlesignUp}
+                        >
+                            <View style={styles.login_social_button}>
+                                <Image
+                                    style={styles.login_social_icon}
+                                    source={require('../../assets/Google-Logo.png')}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View style={styles.login_social_button}>
+                                <Image
+                                    style={styles.login_social_icon}
+                                    source={require('../../assets/twitter-logo.png')}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={handleSignUp}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Sign up</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('Login')}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text style={styles.buttonOutlineText}>Login</Text>
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
+        </KeyboardAwareScrollView>
     )
 }
 
@@ -103,9 +156,10 @@ export default SignUpScreen
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: 50,
+        alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
     },
     inputContainer: {
         width: '70%'
@@ -146,4 +200,64 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
     },
+    login_social: {
+        width: '100%',
+        maxWidth: 280,
+        marginTop: 20,
+    },
+    login_social_separator: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    login_social_separator_line: {
+        flex: 1,
+        width: '100%',
+        height: 1,
+        backgroundColor: '#E0E0E0',
+    },
+    login_social_separator_text: {
+        marginHorizontal: 10,
+        color: '#808080',
+        fontSize: 16,
+    },
+    login_social_buttons: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 20,
+    },
+    login_social_button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 60,
+        height: 60,
+        marginHorizontal: 12,
+        borderWidth: 1,
+        borderColor: '#E7E7E7',
+        borderRadius: 60,
+    },
+    login_social_icon: {
+        width: 38,
+        height: 38,
+        resizeMode: 'contain',
+    },
+    login_social_facebook: {
+        backgroundColor: '#4267B2',
+        borderColor: '#4267B2',
+    },
+    login_footer_text: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        color: '#808080',
+        fontSize: 15,
+    },
+    login_footer_link: {
+        color: '#208AEC',
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+    logoDonateu: {
+        width: 150,
+        height: 150,
+        padding: 24,
+    }
 })

@@ -18,8 +18,8 @@ const ProfileScreen = () => {
 
     const fetchUserdata = async () => {
         const query = await db
-            .collection("users")
-            .where("uid", "==", user?.uid)
+            .collection("products")
+            .where("title", "==", user?.uid)
             .get();
         const data = await query.docs[0].data();
         setFirstName(data.firstName);
@@ -39,6 +39,12 @@ const ProfileScreen = () => {
 
     return (
         <View style={styles.container}>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Home')}
+                style={[styles.backButton]}
+            >
+                <Text style={styles.buttonOutlineText}>Back</Text>
+            </TouchableOpacity>
             <Image
                 style={styles.logoDonateu}
                 source={require('../../assets/logo-donateU.png')}
@@ -58,13 +64,6 @@ const ProfileScreen = () => {
                 <Text
                     style={styles.text}
                 >{username}</Text>
-                <TouchableOpacity
-                    onPress={signOutUser}
-                    style={[styles.button]}
-                >
-                    <Text style={styles.buttonOutlineText}>Sign out</Text>
-                </TouchableOpacity>
-
             </View>
         </View>
     );
@@ -75,7 +74,6 @@ export default ProfileScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 35,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
     },
-    button: {
+    backButton: {
         backgroundColor: '#0782F9',
         width: '100%',
         padding: 15,
@@ -102,8 +100,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     logoDonateu: {
-        width: 150,
-        height: 150,
+        width: 450,
+        height: 450,
         padding: 40,
     }, headertext: {
         fontSize: 20,

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 import { auth } from '../../DB/dbconnection'
-import SignUpScreen from './SignUpScreen';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 
@@ -48,78 +48,84 @@ const LoginScreen = () => {
     }
 
     return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior="padding"
-        >
-            <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={text => setEmail(text)}
-                    style={styles.input}
-                />
-                <TextInput
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                    style={styles.input}
-                    secureTextEntry
-                />
-            </View>
+        <KeyboardAwareScrollView
 
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={handleLogin}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('SignUp')}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text style={styles.buttonOutlineText}>Register</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.login_social}>
-                <View style={styles.login_social_separator}>
-                    <View style={styles.login_social_separator_line} />
-                    <Text style={styles.login_social_separator_text}>{'or'}</Text>
-                    <View style={styles.login_social_separator_line} />
+            behavior="padding" enabled
+        >
+            <View style={styles.container}>
+                <Image
+                    style={styles.logoDonateu}
+                    source={require('../../assets/logo-donateU.png')}
+                />
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        placeholder="Email"
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+                        style={styles.input}
+                        secureTextEntry
+                    />
                 </View>
-                <View style={styles.login_social_buttons}>
-                    <TouchableOpacity>
-                        <View
-                            style={[
-                                styles.login_social_button,
-                                styles.login_social_facebook,
-                            ]}>
-                            <Image
-                                style={styles.login_social_icon}
-                                source={require('../../assets/facebook-logo.png')}
-                            />
-                        </View>
+
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        onPress={handleLogin}
+                        style={styles.button}
+                    >
+                        <Text style={styles.buttonText}>Login</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <View style={styles.login_social_button}>
-                            <Image
-                                style={styles.login_social_icon}
-                                source={require('../../assets/Google-Logo.png')}
-                            />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <View style={styles.login_social_button}>
-                            <Image
-                                style={styles.login_social_icon}
-                                source={require('../../assets/twitter-logo.png')}
-                            />
-                        </View>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('SignUp')}
+                        style={[styles.button, styles.buttonOutline]}
+                    >
+                        <Text style={styles.buttonOutlineText}>Register</Text>
                     </TouchableOpacity>
                 </View>
+                <View style={styles.login_social}>
+                    <View style={styles.login_social_separator}>
+                        <View style={styles.login_social_separator_line} />
+                        <Text style={styles.login_social_separator_text}>{'or'}</Text>
+                        <View style={styles.login_social_separator_line} />
+                    </View>
+                    <View style={styles.login_social_buttons}>
+                        <TouchableOpacity>
+                            <View
+                                style={[
+                                    styles.login_social_button,
+                                    styles.login_social_facebook,
+                                ]}>
+                                <Image
+                                    style={styles.login_social_icon}
+                                    source={require('../../assets/facebook-logo.png')}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View style={styles.login_social_button}>
+                                <Image
+                                    style={styles.login_social_icon}
+                                    source={require('../../assets/Google-Logo.png')}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View style={styles.login_social_button}>
+                                <Image
+                                    style={styles.login_social_icon}
+                                    source={require('../../assets/twitter-logo.png')}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-        </KeyboardAvoidingView>
+        </KeyboardAwareScrollView>
     )
 }
 
@@ -127,9 +133,10 @@ export default LoginScreen
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: 110,
+        alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
     },
     inputContainer: {
         width: '70%'
@@ -225,4 +232,9 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
     },
+    logoDonateu: {
+        width: 150,
+        height: 150,
+        padding: 24,
+    }
 })

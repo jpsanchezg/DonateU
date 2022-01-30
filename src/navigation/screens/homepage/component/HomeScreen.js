@@ -1,89 +1,138 @@
 import { StatusBar } from 'expo-status-bar';
-import {useState} from 'react';
-import { StyleSheet, Text, TextInput, View, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/core'
+import { useState } from 'react';
+import { StyleSheet, Text, TextInput, View, FlatList, Image, Button, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function App() {
+const HomeScreen = () => {
+
     const [items, setItem] = useState([
-        {title: 'white shirt', location: 'abc', key: '1'},
-        {title: 'brown table',  location: 'def', key: '2'},
-        {title: 'rice',  location: 'ghi', key: '3'},
+        { title: 'white shirt', location: 'abc', key: '1' },
+        { title: 'brown table', location: 'def', key: '2' },
+        { title: 'rice', location: 'ghi', key: '3' },
     ]);
+    const [title, setTitle] = useState("");
+    const [location, setLocation] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [search, setSearch] = useState("");
+    const navigation = useNavigation()
+
+    const searchObj = () => {
+        console.log("buscando")
+    }
+
+    const moreInfo = () => {
+
+        navigation.navigate('Productinfo')
+    }
+
+
     return (
         <View style={styles.container}>
             <View style={styles.search}>
-            <TextInput placeholer='Search'  style={styles.searchInput}></TextInput>
+                <TextInput
+                    placeholder="Search"
+                    value={search}
+                    onChangeText={text => setSearch(text)}
+                    style={styles.searchInput} />
+
             </View>
-            <FlatList 
+            <Icon.Button
+                name="search-outline"
+                onPress={searchObj}
+                style={styles.searchbtn}
+            ></Icon.Button>
+            <FlatList
                 numColumns={2}
                 data={items}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
+
                     <View style={styles.card}>
-                    {/* <Image source={require('../../../assets/download.jpg')} /> */}
-                    <View style={styles.cardImage}> </View>
-                    
-                    <Text style={styles.cardText}>Title: {item.title} </Text>
-                    <Text style={styles.cardText}>Location:  {item.location}</Text>
-                </View>
-                    // <Text style={styles.cardImage}>{item.title}</Text>
-                )}
-            />          
-            
-            
-            {/* <Text>home page lel</Text> */}
-            <StatusBar style="auto" />
-        </View>
+
+                        <TouchableOpacity
+                            onPress={moreInfo}
+                        >
+                            <View >
+                                <Image style={styles.cardImage} source={{
+                                    uri: 'https://reactnative.dev/img/tiny_logo.png',
+                                }} />
+                            </View>
+
+                            <Text style={styles.cardText}>Title: {item.title} </Text>
+                            <Text style={styles.cardText}>Location:  {item.location}</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                )
+                }
+
+            />
+            < StatusBar style="auto" />
+        </View >
     );
 }
+
+export default HomeScreen
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: 35,
         backgroundColor: '#fff',
     },
-    search : {
+    search: {
         height: 50,
         backgroundColor: '#c4c4c4',
     },
-    searchInput:{
-        top:5,
-        bottom:5,
-        left:40,
-        width: '95%',
-        alignItems: 'centre',
-        position:'absolute',
+    searchInput: {
+        top: 5,
+        bottom: 5,
+        left: 10,
+        width: '80%',
+        alignItems: 'center',
+        position: 'absolute',
         backgroundColor: 'white',
         borderRadius: 10,
         padding: 8,
-        color: 'black',
-        fontSize : 24,
+        fontSize: 24,
+    },
+    searchbtn: {
+        width: 50
+
     },
     card: {
-        height:350,
-        width: 350,
+        height: 200,
+        width: 150,
         borderRadius: 15,
-        margin : 40,
+        margin: 10,
         backgroundColor: '#c4c4c4',
-        shadowColor:'gray',
+        shadowColor: 'gray',
         shadowOffset: {
-            width:5,
-            height:5,
+            width: 10,
+            height: 10,
         },
         shadowOpacity: 0.75,
         shadowRadius: 5,
-        elevation:9,
+        elevation: 9,
     },
     cardImage: {
-        height:'70%',
+        height: '75%',
         width: '100%',
-        borderTopLeftRadius :15,
+        borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         backgroundColor: 'white',
 
     },
     cardDescription: {
-        margin:15,
-        fontSize:24,
+        margin: 5,
+        fontSize: 24,
         fontWeight: '200',
-        
+
+    },
+    cardText: {
+        paddingLeft: 10,
+        textAlign: "left",
+        marginTop: -1,
+
     }
 });

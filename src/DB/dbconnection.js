@@ -1,7 +1,6 @@
 
 // Import the functions you need from the SDKs you need
 import * as firebase from "firebase";
-import LoginScreen from '../navigation/screens/LoginScreen';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,6 +15,9 @@ const firebaseConfig = {
     measurementId: "G-Y7MQRCK78E"
 };
 
+
+
+
 // Initialize Firebase
 let app;
 if (firebase.apps.length === 0) {
@@ -27,6 +29,13 @@ if (firebase.apps.length === 0) {
 const auth = firebase.auth()
 const db = app.firestore();
 
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+
+const signInWithGoogle = async () => {
+
+
+};
 const registerWithEmailAndPassword = async (email, password, username, firstName, lastname) => {
     try {
         const res = await auth.createUserWithEmailAndPassword(email, password);
@@ -39,11 +48,10 @@ const registerWithEmailAndPassword = async (email, password, username, firstName
         });
     } catch (err) {
         console.error(err);
-        alert(err.message);
     }
 };
 
-const donateProductsxUser = async (photo, tittle, location, description) => {
+const donateProductsxUser = async (photoURL, tittle, location, description) => {
     try {
         const res = await auth.createUserWithEmailAndPassword(email, password);
         const user = res.user;
@@ -51,6 +59,8 @@ const donateProductsxUser = async (photo, tittle, location, description) => {
             uid: user.uid,
             username,
             firstName,
+            category,
+            photoURL,
             lastname
         });
     } catch (err) {
@@ -58,6 +68,9 @@ const donateProductsxUser = async (photo, tittle, location, description) => {
         alert(err.message);
     }
 };
+
+
+
 
 
 
@@ -73,7 +86,9 @@ const signOutUser = async () => {
 
 export {
     auth,
+    db,
     signOutUser,
+    signInWithGoogle,
     registerWithEmailAndPassword
 
 };
