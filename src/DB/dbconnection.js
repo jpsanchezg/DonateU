@@ -1,13 +1,11 @@
-import { initializeApp } from 'firebase/app';
 
-// Optionally import the services that you want to use
-//import {...} from "firebase/auth";
-//import {...} from "firebase/database";
-//import {...} from "firebase/firestore";
-//import {...} from "firebase/functions";
-//import {...} from "firebase/storage";
+// Import the functions you need from the SDKs you need
+import * as firebase from "firebase";
+import LoginScreen from '../navigation/screens/LoginScreen';
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Initialize Firebase
+// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBs5xxm-shEQHmERVa0SdzXL9a0mHnmlSU",
     authDomain: "donateu.firebaseapp.com",
@@ -18,4 +16,64 @@ const firebaseConfig = {
     measurementId: "G-Y7MQRCK78E"
 };
 
-initializeApp(firebaseConfig);
+// Initialize Firebase
+let app;
+if (firebase.apps.length === 0) {
+    app = firebase.initializeApp(firebaseConfig);
+} else {
+    app = firebase.app()
+}
+
+const auth = firebase.auth()
+const db = app.firestore();
+
+const registerWithEmailAndPassword = async (email, password, username, firstName, lastname) => {
+    try {
+        const res = await auth.createUserWithEmailAndPassword(email, password);
+        const user = res.user;
+        await db.collection("users").doc(user.uid).set({
+            uid: user.uid,
+            username,
+            firstName,
+            lastname
+        });
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
+};
+
+const donateProductsxUser = async (photo, tittle, location, description) => {
+    try {
+        const res = await auth.createUserWithEmailAndPassword(email, password);
+        const user = res.user;
+        await db.collection("donations").doc(tittle).set({
+            uid: user.uid,
+            username,
+            firstName,
+            lastname
+        });
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
+};
+
+
+
+const signOutUser = async () => {
+    try {
+        await firebase.auth().signOut();
+        console.log('User Logged Out!');
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export {
+    auth,
+    signOutUser,
+    registerWithEmailAndPassword
+
+};

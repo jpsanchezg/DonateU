@@ -1,20 +1,149 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/core'
+import React, { useEffect, useState } from 'react'
 
-export default function App() {
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+    auth,
+    registerWithEmailAndPassword
+} from '../../DB/dbconnection'
+
+const SignUpScreen = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastname, setLastName] = useState('')
+
+    const navigation = useNavigation()
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                navigation.replace("Home")
+            }
+        })
+
+        return unsubscribe
+    }, [])
+
+    const handleSignUp = () => {
+        if (!email || !password || !username || !firstName || !lastname) {
+            recuerderellenartodo();
+        } else {
+            registerWithEmailAndPassword(email, password, username, firstName, lastname);
+
+        }
+    };
+
+
+    const handleLogin = () => {
+        navigation.replace("Login")
+    }
+
     return (
-        <View style={styles.container}>
-            <Text>sign home page lel</Text>
-            <StatusBar style="auto" />
-        </View>
-    );
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior="padding"
+        >
+            <View style={styles.inputContainer}>
+                <TextInput
+                    placeholder="FirstName"
+                    value={firstName}
+                    onChangeText={text => setFirstName(text)}
+                    style={styles.input}
+                />
+                <TextInput
+                    placeholder="LastName"
+                    value={lastname}
+                    onChangeText={text => setLastName(text)}
+                    style={styles.input}
+                />
+                <TextInput
+                    placeholder="Username"
+                    value={username}
+                    onChangeText={text => setUsername(text)}
+                    style={styles.input}
+
+                />
+                <TextInput
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={text => setEmail(text)}
+                    style={styles.input}
+                />
+                <TextInput
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={text => setPassword(text)}
+                    style={styles.input}
+                    secureTextEntry
+                />
+
+            </View>
+
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                    onPress={handleSignUp}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonText}>Sign up</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Login')}
+                    style={[styles.button, styles.buttonOutline]}
+                >
+                    <Text style={styles.buttonOutlineText}>Login</Text>
+                </TouchableOpacity>
+            </View>
+        </KeyboardAvoidingView>
+    )
 }
+
+export default SignUpScreen
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
         justifyContent: 'center',
+        alignItems: 'center',
     },
-});
+    inputContainer: {
+        width: '70%'
+    },
+    input: {
+        backgroundColor: 'white',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 10,
+        marginTop: 5,
+    },
+    buttonContainer: {
+        width: '60%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 40,
+    },
+    button: {
+        backgroundColor: '#0782F9',
+        width: '100%',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    buttonOutline: {
+        backgroundColor: 'white',
+        marginTop: 5,
+        borderColor: '#0782F9',
+        borderWidth: 2,
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 16,
+    },
+    buttonOutlineText: {
+        color: '#0782F9',
+        fontWeight: '700',
+        fontSize: 16,
+    },
+})
