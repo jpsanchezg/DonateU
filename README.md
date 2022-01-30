@@ -12,5 +12,5 @@
 - React native : For frontend
 - Node Js: For backend
 - Firebase: For database and user authentication
-
+- Expo: For run the application
 
