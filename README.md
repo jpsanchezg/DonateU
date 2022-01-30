@@ -14,3 +14,5 @@
 - Firebase: For database and user authentication
 - Expo: For run the application
 
+
+#team 39, Elite Uwus
